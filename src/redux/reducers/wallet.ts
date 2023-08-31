@@ -3,7 +3,15 @@ import { SUBMIT_WALLET_DATA } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
-  expenses: [],
+  expenses: [{
+    id: '',
+    value: 0,
+    currency: '',
+    method: '',
+    tag: '',
+    description: '',
+    exchangeRates: '',
+  }],
   editor: false,
   idToEdit: 0,
 };
