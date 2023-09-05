@@ -1,31 +1,48 @@
 import { AnyAction } from 'redux';
-import { SUBMIT_WALLET_DATA } from '../actions';
+import {
+  ADD_EXPENSE,
+  REQUEST_FAILED,
+  REQUEST_START,
+  SUBMIT_CURRENCY_DATA,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
-  expenses: [{
-    id: '',
-    value: 0,
-    currency: '',
-    method: '',
-    tag: '',
-    description: '',
-    exchangeRates: '',
-  }],
+  expenses: [],
   editor: false,
   idToEdit: 0,
 };
 
-const walletDataReducer = (state = INITIAL_STATE, action: AnyAction) => {
+const walletReducer = (
+  state = INITIAL_STATE,
+  action: AnyAction,
+) => {
   switch (action.type) {
-    case SUBMIT_WALLET_DATA:
+    case REQUEST_START:
       return {
         ...state,
-        ...action.payload,
+        isLoading: true,
+      };
+    case SUBMIT_CURRENCY_DATA:
+      return {
+        ...state,
+        isLoading: false,
+        currencies: action.payload,
+      };
+    case ADD_EXPENSE:
+      return {
+        ...state,
+        expenses: [...state.expenses, action.payload],
+      };
+    case REQUEST_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
       };
     default:
       return state;
   }
 };
 
-export default walletDataReducer;
+export default walletReducer;

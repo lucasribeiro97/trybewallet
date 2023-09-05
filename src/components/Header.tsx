@@ -1,18 +1,18 @@
 import { useSelector } from 'react-redux';
-import { CombineType } from '../types';
+import { ReduxState } from '../types';
 
 function Header() {
-  const data = useSelector((globalState: CombineType) => globalState);
+  const data = useSelector((globalState: ReduxState) => globalState);
 
   const { user: { email } } = data;
   const { wallet: { expenses } } = data;
 
-  const totalExpenses = expenses.reduce((acc, expense) => {
-    acc.value += expense.value;
-    return acc;
-  }, {
-    value: 0,
-  });
+  const totalExpenses = expenses.reduce((total, expense) => {
+    const exchangeRate = expense.exchangeRates[expense.currency];
+    const value = Number(expense.value);
+    const askValue = value * exchangeRate.ask;
+    return total + askValue;
+  }, 0);
 
   return (
     <div>
@@ -26,7 +26,7 @@ function Header() {
         <div
           data-testid="total-field"
         >
-          {`Despesa total: R$${totalExpenses.value}`}
+          { totalExpenses.toFixed(2) }
         </div>
         <div
           data-testid="header-currency-field"
