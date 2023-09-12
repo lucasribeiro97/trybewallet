@@ -1,10 +1,12 @@
 import { AnyAction } from 'redux';
 import {
   ADD_EXPENSE,
+  REMOVE_EXPENSE,
   REQUEST_FAILED,
   REQUEST_START,
   SUBMIT_CURRENCY_DATA,
 } from '../actions';
+import { ExpenseData } from '../../types';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -33,6 +35,11 @@ const walletReducer = (
       return {
         ...state,
         expenses: [...state.expenses, action.payload],
+      };
+    case REMOVE_EXPENSE:
+      return {
+        ...state,
+        expenses: state.expenses.filter((id: ExpenseData) => id.id !== action.payload),
       };
     case REQUEST_FAILED:
       return {

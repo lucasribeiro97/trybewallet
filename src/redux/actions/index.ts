@@ -5,6 +5,7 @@ export const REQUEST_FAILED = 'REQUEST_FAILED';
 export const SUBMIT_USER_DATA = 'SUBMIT_USER_DATA';
 export const SUBMIT_CURRENCY_DATA = 'SUBMIT_CURRENCY_DATA';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const submitUserData = (userData: UserDataType) => ({
   type: SUBMIT_USER_DATA,
@@ -25,8 +26,13 @@ export const submitCurrencyData = (currencyData: string[]) => ({
 });
 
 export const addExpense = (expense: ExpenseData) => ({
-  type: 'ADD_EXPENSE',
+  type: ADD_EXPENSE,
   payload: expense,
+});
+
+export const removeExpense = (id: number) => ({
+  type: REMOVE_EXPENSE,
+  payload: id,
 });
 
 export function thunkCurrencies() {

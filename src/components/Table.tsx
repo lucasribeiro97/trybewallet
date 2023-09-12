@@ -1,9 +1,15 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../types';
+import { removeExpense } from '../redux/actions';
 
 function Table() {
+  const dispatch = useDispatch();
   const data = useSelector((globalState: ReduxState) => globalState);
   const { wallet: { expenses } } = data;
+
+  const handleDelete = (id: number) => {
+    dispatch(removeExpense(id));
+  };
 
   return (
     <div>
@@ -40,6 +46,7 @@ function Table() {
                 <button
                   data-testid="delete-btn"
                   id={ expense.id.toString() }
+                  onClick={ () => handleDelete(expense.id) }
                 >
                   Excluir
                 </button>
